@@ -23,11 +23,11 @@
                         @foreach($images as $i)
                             <div class="col-sm-6 col-md-3" id="for-remove-{{ $i->id }}">
                                 <div class="thumbnail">
-                                    <img class="cursor-zoom-in" src="{{ url("/storage/$i->image") }}">
+                                    <img class="cursor-zoom-in" src="{{ url("/uploads/$i->image") }}">
 
                                     <div class="caption">
                                         <p style="text-align: center">
-                                            <button class="btn btn-danger  delete-image" data-id="{{ $i->id }}">
+                                            <button class="btn btn-danger  delete-image" onclick="del({{ $i->id }})">
                                                 Delete
                                             </button>
                                         </p>
@@ -44,12 +44,10 @@
         </div>
     </div>
     <script>
-        $(document).on('change', '.get-change-active', function () {
-            var id = $(this).attr('data-id');
-            var status = $(this).is(':checked') ? 1 : 0;
-            $.post( "/admin/active-fields/change-status", {id: id, status: status}, function( data ) {
-
+        function del(id) {
+            $.post( "/admin/images/" + id, {_method: "DELETE"}, function( data ) {
+                $( "#for-remove-" + id ).remove();
             });
-        });
+        }
     </script>
 @endsection

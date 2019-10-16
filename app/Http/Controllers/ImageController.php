@@ -39,7 +39,10 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        $file = Storage::putFile('photos', new File($request->file), 'public');
+        if(!is_dir(public_path("uploads/$this->folder"))) {
+            mkdir(public_path("uploads/$this->folder"), 777);
+        }
+        $file = Storage::putFile($this->folder, new File($request->file), 'public');
         $image = new Image();
         $image->image = $file;
         $image->save();
@@ -87,6 +90,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        //
+        $image->delete();
+        unlink(public_path("uploads/$image->image"));
     }
 }
