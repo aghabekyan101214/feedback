@@ -110,7 +110,7 @@
             <!-- BEGIN MAIN MENU -->
             <ul class="gui-controls" id="main-menu">
                 <li><a href="/admin/questions"><div class="gui-icon"><i class="fa fa-question-circle fa-fw"></i></div><span class="title">Questions</span></a></li>
-                <li><a href="/admin/employee"><div class="gui-icon"><i class="fa fa-list-ul fa-fw"></i></div><span class="title">Answers</span></a></li>
+                <li><a href="/admin/answers"><div class="gui-icon"><i class="fa fa-list-ul fa-fw"></i></div><span class="title">Answers</span></a></li>
                 <li><a href="/admin/employees"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Employee</span></a></li>
                 <li><a href="/admin/active-fields"><div class="gui-icon"><i class="fa fa-cogs fa-fw"></i></div><span class="title">Manage Fields</span></a></li>
                 <li><a href="/admin/images"><div class="gui-icon"><i class="fa fa-image fa-fw"></i></div><span class="title">Manage Images</span></a></li>
@@ -322,6 +322,11 @@
             "paging": false
         });
     });
+
+    function delRow(id) {
+        if(confirm("Do You Really Want To Remove The Row?") === false) return false;
+        $("." + id).remove();
+    }
 </script>
 </body>
 </html>

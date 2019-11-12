@@ -18,8 +18,9 @@ class CreateQuestionsTable extends Migration
             $table->string("question_en", 255);
             $table->string("question_fr", 255);
             $table->string("question_ar", 255);
+            $table->enum("answer_type", ['radio', 'checkbox'])->default("radio");
             $table->unsignedSmallInteger("active");
-            $table->unsignedSmallInteger("type");
+            $table->enum("type", ['employee', 'general', 'custom']);
             $table->unsignedSmallInteger("order");
             $table->timestamps();
         });

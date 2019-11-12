@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/admin");
 });
 
 Auth::routes();
@@ -22,7 +22,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('/employees', 'EmployeeController');
     Route::resource('/active-fields', 'ActiveFieldController');
     Route::resource('/images', 'ImageController');
+    Route::resource('/answers', 'AnswerVariantController');
     Route::post("/employees/change-status", "EmployeeController@change_status");
     Route::post("/questions/change-status", "QuestionController@change_status");
     Route::post("/active-fields/change-status", "ActiveFieldController@change_status");
+    Route::post("/answers/change-status", "AnswerVariantController@change_status");
 });

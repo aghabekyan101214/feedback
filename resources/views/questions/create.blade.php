@@ -108,9 +108,11 @@
                                 </div>
                             </div>
                         </div>
+
                     <div class="panel-footer">
                         <input class="btn btn-success btn-block btn-lg" id="submit-button" type="submit" name="yt0" value="Create">
                     </div>
+
                 </form>
             </div>
         </div>

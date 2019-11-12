@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\AnswerVariant;
 use App\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
 {
@@ -52,7 +54,7 @@ class QuestionController extends Controller
         $question->question_fr = $request->question_fr;
         $question->question_ar = $request->question_ar;
         $question->order       = $request->order;
-        $question->type        = $request->type;
+        $question->type        = Question::TYPES[$request->type];
         $question->active      = $request->active;
         $question->save();
         return redirect("admin/questions");
@@ -102,7 +104,7 @@ class QuestionController extends Controller
         $question->question_fr = $request->question_fr;
         $question->question_ar = $request->question_ar;
         $question->order       = $request->order;
-        $question->type        = $request->type;
+        $question->type        = Question::TYPES[$request->type];
         $question->active      = $request->active;
         $question->save();
         return redirect("admin/questions");
