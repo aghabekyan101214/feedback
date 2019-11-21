@@ -18,8 +18,25 @@ class Question extends Model
         return $this->hasMany("App\AnswerVariant");
     }
 
+    public function client()
+    {
+        return $this->belongsToMany("App\Client", "clients_answers", "question_id", "client_id");
+    }
+
     public function custom_answer()
     {
         return $this->hasMany("App\AnswerVariant");
+    }
+
+
+    public function clients_answers()
+    {
+        return $this->hasMany("App\ClientAnswer", "question_id", "id");
+    }
+
+    public function avgRating()
+    {
+        return $this->clients_answers()
+            ->selectRaw('round(avg(rate), 2) as rate, question_id')->groupBy('question_id');
     }
 }

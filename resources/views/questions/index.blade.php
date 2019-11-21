@@ -36,8 +36,10 @@
                                         <tr>
                                             <td>{{ $q->question_en }}</td>
                                             <td>
-                                                <span class="label font20 label-lg label-success">4.80</span>
-                                                <a class="label font20 label-default" href="/feedback-yii/Answer/index?Answer%5Bquestion_id%5D=26">View Answers (286 )</a>
+                                                @if($q->type != "custom")
+                                                    <span class="label font20 label-lg label-success">{{ $q->avgRating[0]->rate ?? "" }}</span>
+                                                    <a class="label font20 label-default" href="/admin/questions/show-answers/{{ $q->id }}">View Answers ({{ count($q->clients_answers) }} )</a>
+                                                @endif
                                             </td>
                                             <td>
                                                 <input class="get-change-active hidden" id="get_ch_{{ $bin }}" data-id="{{ $q->id }}" @if($q->active == 1) checked="checked" @endif type="checkbox" value="{{ $q->active }}" name="active">

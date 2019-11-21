@@ -18,7 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::paginate(50);
+        $questions = Question::with(["clients_answers", "avgRating"])->paginate(50);
         return view("$this->folder.index", compact("questions"));
     }
 
@@ -127,5 +127,13 @@ class QuestionController extends Controller
         $question = Question::find($request->id);
         $question->active = $request->status;
         $question->save();
+    }
+
+    public function show_answer($id)
+    {
+        $data = Question::with(['clients_answers' => function ($query) {
+            return $query->with(["clients", "employee"]);
+        }])->find($id);
+        return view($this->folder.".show_answer", compact("data"));
     }
 }
