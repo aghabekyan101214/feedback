@@ -114,7 +114,7 @@
                 <li><a href="/admin/employees"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Employee</span></a></li>
                 <li><a href="/admin/active-fields"><div class="gui-icon"><i class="fa fa-cogs fa-fw"></i></div><span class="title">Manage Fields</span></a></li>
                 <li><a href="/admin/images"><div class="gui-icon"><i class="fa fa-image fa-fw"></i></div><span class="title">Manage Images</span></a></li>
-                <li><a href="/feedback-yii/Customer/index"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Customer</span></a></li>
+                <li><a href="/admin/clients"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Customer</span></a></li>
             </ul>
         </div>
     </div>

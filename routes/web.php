@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('/active-fields', 'ActiveFieldController');
     Route::resource('/images', 'ImageController');
     Route::resource('/answers', 'AnswerVariantController');
+    Route::resource('/clients', 'ClientController');
     Route::post("/employees/change-status", "EmployeeController@change_status");
     Route::post("/questions/change-status", "QuestionController@change_status");
     Route::post("/active-fields/change-status", "ActiveFieldController@change_status");

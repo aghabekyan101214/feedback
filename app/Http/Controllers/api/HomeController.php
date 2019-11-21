@@ -21,7 +21,7 @@ class HomeController extends Controller
         $employees = Employee::select("id", "name_en as full_name_en", "name_fr as full_name_fr", "name_ar as full_name_ar")->where("active", 1)->get();
         $custom_questions = Question::whereHas("custom_answer")->with(["custom_answer" => function($query){
             $query->select("id", "question_id", "answer_en", "answer_fr", "answer_ar");
-        }])->where(["type" => Question::CUSTOM, "active" => 1])->get();
+        }])->where(["type" => Question::TYPES[Question::CUSTOM], "active" => 1])->get();
         $data = array(
             "fields" => $fields,
             "images" => $images,
