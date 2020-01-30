@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class QuestionController extends Controller
 {
 
-    private $folder = "questions";
+    private $folder = "feedback.questions";
     /**
      * Display a listing of the resource.
      *

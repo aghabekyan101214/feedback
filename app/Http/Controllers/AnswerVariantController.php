@@ -16,7 +16,7 @@ class AnswerVariantController extends Controller
     public function index()
     {
         $answers = AnswerVariant::with("questions")->get();
-        return view("variants.index", compact("answers"));
+        return view("feedback.variants.index", compact("answers"));
     }
 
     /**
@@ -27,7 +27,7 @@ class AnswerVariantController extends Controller
     public function create()
     {
         $questions = Question::all();
-        return view("variants.create", compact("questions"));
+        return view("feedback.variants.create", compact("questions"));
     }
 
     /**
@@ -74,7 +74,7 @@ class AnswerVariantController extends Controller
     public function edit($id)
     {
         $data = AnswerVariant::with("questions")->find($id);
-        return view("variants.edit", compact("data"));
+        return view("feedback.variants.edit", compact("data"));
     }
 
     /**

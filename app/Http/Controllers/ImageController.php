@@ -9,7 +9,8 @@ use Illuminate\Http\File;
 
 class ImageController extends Controller
 {
-    private $folder = "images";
+    private $folder = "feedback.images";
+    private $upload = "feedback";
     /**
      * Display a listing of the resource.
      *
@@ -39,10 +40,10 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        if(!is_dir(public_path("uploads/$this->folder"))) {
-            mkdir(public_path("uploads/$this->folder"), 777);
+        if(!is_dir(public_path("uploads/$this->upload"))) {
+            mkdir(public_path("uploads/$this->upload"), 777);
         }
-        $file = Storage::putFile($this->folder, new File($request->file), 'public');
+        $file = Storage::putFile($this->upload, new File($request->file), 'public');
         $image = new Image();
         $image->image = $file;
         $image->save();

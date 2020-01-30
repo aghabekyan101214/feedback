@@ -22,6 +22,9 @@
 
     <link rel="stylesheet" href="{{ asset("material/datatable/datatables.min.css") }}">
     <link rel="stylesheet" href="{{ asset("material/dropzone/dist/dropzone.css") }}">
+
+    <link rel="stylesheet" href="{{ asset("material/select2/dist/css/select2.min.css") }}">
+
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -30,7 +33,6 @@
 </head>
 <body class="menubar-hoverable header-fixed">
 <header id="header">
-
 
     <div class="headerbar">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -64,7 +66,11 @@
                     </a>
                     <ul class="dropdown-menu animation-dock">
                         <li><a href=""><i class="fa fa-fw fa-lock"></i> Change Password</a></li>
-                        <li><a href=""><i class="fa fa-fw fa-power-off text-danger"></i>Logout</a></li>
+                        <li><a onclick="document.getElementById('logout-form').submit()" href="javascript:void(0)"><i class="fa fa-fw fa-power-off text-danger"></i>Logout</a></li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                              style="display: none;">
+                            @csrf
+                        </form>
                     </ul>
                     <!--end .dropdown-menu -->
                 </li>
@@ -109,12 +115,31 @@
         <div class="menubar-scroll-panel">
             <!-- BEGIN MAIN MENU -->
             <ul class="gui-controls" id="main-menu">
-                <li><a href="/admin/questions"><div class="gui-icon"><i class="fa fa-question-circle fa-fw"></i></div><span class="title">Questions</span></a></li>
-                <li><a href="/admin/answers"><div class="gui-icon"><i class="fa fa-list-ul fa-fw"></i></div><span class="title">Answers</span></a></li>
-                <li><a href="/admin/employees"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Employee</span></a></li>
-                <li><a href="/admin/active-fields"><div class="gui-icon"><i class="fa fa-cogs fa-fw"></i></div><span class="title">Manage Fields</span></a></li>
-                <li><a href="/admin/images"><div class="gui-icon"><i class="fa fa-image fa-fw"></i></div><span class="title">Manage Images</span></a></li>
-                <li><a href="/admin/clients"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Customer</span></a></li>
+
+                <li @if(in_array("", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/"><div class="gui-icon"><i class="fa fa-question-circle fa-fw"></i></div><span class="title">Home Page</span></a></li>
+
+                {{--                feedback start--}}
+                @if(in_array("feedback", explode("/", Request::url()) ))
+
+                    <li @if(in_array("questions", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/feedback/questions"><div class="gui-icon"><i class="fa fa-question-circle fa-fw"></i></div><span class="title">Questions</span></a></li>
+                    <li @if(in_array("answers", explode(".", \Request::route()->getName()) )) class="active" @endif><a href="/admin/feedback/answers"><div class="gui-icon"><i class="fa fa-list-ul fa-fw"></i></div><span class="title">Answers</span></a></li>
+                    <li @if(in_array("employees", explode(".", \Request::route()->getName()) )) class="active" @endif><a href="/admin/feedback/employees"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Employee</span></a></li>
+                    <li @if(in_array("active-fields", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/active-fields"><div class="gui-icon"><i class="fa fa-cogs fa-fw"></i></div><span class="title">Manage Fields</span></a></li>
+                    <li @if(in_array("images", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/images"><div class="gui-icon"><i class="fa fa-image fa-fw"></i></div><span class="title">Manage Images</span></a></li>
+                    <li @if(in_array("clients", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/clients"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Customer</span></a></li>
+
+                @endif
+                {{--                feedback end--}}
+
+                {{--                P.O.S start--}}
+                @if(in_array("pos", explode("/", Request::url()) ))
+                    <li @if(in_array("categories", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/categories"><div class="gui-icon"><i class="fa fa-list"></i></div><span class="title">Food Categories</span></a></li>
+                    <li @if(in_array("tables", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/tables"><div class="gui-icon"><i class="fa fa-table"></i></div><span class="title">Tables</span></a></li>
+                    <li @if(in_array("items", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/items"><div class="gui-icon"><i class="fa fa-circle fa-fw"></i></div><span class="title">Food Items</span></a></li>
+                    <li @if(in_array("orders", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/orders"><div class="gui-icon"><i class="fa fa-check"></i></div><span class="title">Orders</span></a></li>
+                    <li @if(in_array("current-orders", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/current-orders"><div class="gui-icon"><i class="fa fa-check"></i></div><span class="title">Current Orders</span></a></li>
+                @endif
+                {{--                P.O.S end--}}
             </ul>
         </div>
     </div>
@@ -125,13 +150,13 @@
         <div id="topbar">
 
         </div>
-        <div id="page-main-container">
+        <div id="page-main-container" style="padding-top: 15px">
 
-            <div class="alert alert-alert-dismissible text-center fade in" role="alert">
-                <button type="button" class="close" id="alert_button_from_flash" data-dismiss="alert"><span
-                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <strong></strong>
-            </div>
+{{--            <div class="alert alert-alert-dismissible text-center fade in" role="alert">--}}
+{{--                <button type="button" class="close" id="alert_button_from_flash" data-dismiss="alert"><span--}}
+{{--                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>--}}
+{{--                <strong></strong>--}}
+{{--            </div>--}}
             @yield("content")
         </div>
     </section>
@@ -229,6 +254,8 @@
 <script src="{{ asset("material/datatable/datatables.min.js") }}"></script>
 <script src="{{ asset("material/dropzone/dist/dropzone.js") }}"></script>
 
+<script src="{{ asset("material/select2/dist/js/select2.min.js") }}"></script>
+
 <script type="text/javascript">
 
     jQuery(document).ready(function () {
@@ -236,6 +263,8 @@
         $('.summernote').summernote({
             height: 200
         });
+
+        $('.select2').select2();
 
         sideMenu();
 
