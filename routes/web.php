@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::get('/', 'HomeController@index');
-
+    Route::resource("/users", "UserController");
 //    Feedback Routes
 
     Route::group(["prefix" => "feedback"], function() {
@@ -43,8 +43,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
         Route::resource('/tables', 'pos\TableController');
         Route::resource('/items', 'pos\ItemController');
         Route::resource('/orders', 'pos\OrderController');
-        Route::post('/orders/update/{orderId?}', 'pos\OrderController@update');
-        Route::get('/edit-order/{id?}', 'pos\OrderController@editOrder');
+        Route::post('/orders/update/{id?}', 'pos\OrderController@update')->middleware('checkOrderStatus');
+        Route::get('/edit-order/{id?}', 'pos\OrderController@editOrder')->middleware('checkOrderStatus');
         Route::resource('/current-orders', 'pos\CurrentOrdersController');
         Route::post('/current-orders/change-status/{orderId?}', 'pos\CurrentOrdersController@changeStatus');
     });

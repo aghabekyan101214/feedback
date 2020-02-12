@@ -48,7 +48,7 @@
                                     {{ $sum }}
                                 </td>
                                 <td class="text-center">
-                                    <button onclick="detail('{{ json_encode($d->ordersList) }}', this)" class="btn btn-default"><i class="fa fa-gear"></i></button>
+                                    <button onclick="detail('{{ json_encode($d->ordersList) }}', this, '{{ $d->status }}')" class="btn btn-default"><i class="fa fa-gear"></i></button>
                                     @if($d->status == 0)
                                         <button data-toggle="tooltip" title="Close Order" class="btn btn-success" onclick="changeStatus('{{ $d->id }}')"><i class="fa fa-toggle-on"></i></button>
                                     @endif
@@ -85,7 +85,7 @@
             } );
         } );
 
-        function detail(data, self) {
+        function detail(data, self, status) {
             let parsedData = JSON.parse(data);
             $(self).parentsUntil("table").find("tr").css({'outline': '0'});
             $(self).parentsUntil("tbody").not("td").css({'outline': '1px solid blue'});
@@ -116,7 +116,7 @@
             $(".orders-detail").html(html);
             let order_id = parsedData != "" ? parsedData[0].order_id : 0;
             $(".detail-span").html(order_id);
-            let route = `/admin/pos/edit-order/${order_id}`;
+            let route = status == 0 ? `/admin/pos/edit-order/${order_id}` : "#";
             $(".href-btn").attr("href", route);
         }
 

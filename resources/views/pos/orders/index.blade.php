@@ -32,8 +32,7 @@
         <div class="col-md-12">
             <div class="pull-right">
                 <ul class="list-group pull-right inline-style" id="yw0">
-                    <li class="list-group-item"><a href="{{ $route }}/create">Create New {{ $title }}</a></li>
-                </ul>
+                 </ul>
             </div>
         </div>
     </div>
@@ -305,6 +304,9 @@
         }
 
         function submitOrder(){
+            if(confirm("Do You Really Want To Submit Order ? ") == false) {
+                return;
+            }
             if(table == "") {
                 alert("Please, Choose a Table");
                 $('.nav-tabs a[href="#table"]').tab('show');

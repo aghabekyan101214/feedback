@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h1>Create Employee</h1>
+                    <h1>Create {{ $title }}</h1>
                 </div>
                 <form action="{{ $route }}" method="post" enctype="multipart/form-data">
                     <div class="panel-body">

@@ -131,12 +131,11 @@ class OrderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\pos\Order  $order
-     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $orderId)
+    public function update(Request $request, $id)
     {
-        OrdersList::where("order_id", $orderId)->delete();
-        $resp = $this->store($request, $orderId);
+        OrdersList::where("order_id", $id)->delete();
+        $resp = $this->store($request, $id);
         return $resp;
     }
 

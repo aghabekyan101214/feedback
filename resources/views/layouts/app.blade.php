@@ -117,6 +117,7 @@
             <ul class="gui-controls" id="main-menu">
 
                 <li @if(in_array("", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/"><div class="gui-icon"><i class="fa fa-question-circle fa-fw"></i></div><span class="title">Home Page</span></a></li>
+                <li @if(in_array("users", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/users/"><div class="gui-icon"><i class="fa fa-user fa-fw"></i></div><span class="title">Users</span></a></li>
 
                 {{--                feedback start--}}
                 @if(in_array("feedback", explode("/", Request::url()) ))
