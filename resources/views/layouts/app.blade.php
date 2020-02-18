@@ -135,6 +135,7 @@
                 {{--                P.O.S start--}}
                 @if(in_array("pos", explode("/", Request::url()) ))
                     <li @if(in_array("categories", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/categories"><div class="gui-icon"><i class="fa fa-list"></i></div><span class="title">Food Categories</span></a></li>
+                    <li @if(in_array("sections", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/sections"><div class="gui-icon"><i class="fa fa-building"></i></div><span class="title">Table Sections</span></a></li>
                     <li @if(in_array("tables", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/tables"><div class="gui-icon"><i class="fa fa-table"></i></div><span class="title">Tables</span></a></li>
                     <li @if(in_array("items", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/items"><div class="gui-icon"><i class="fa fa-circle fa-fw"></i></div><span class="title">Food Items</span></a></li>
                     <li @if(in_array("orders", explode(".", \Request::route()->getName()) )) class="active" @endif ><a href="/admin/pos/orders"><div class="gui-icon"><i class="fa fa-check"></i></div><span class="title">Orders</span></a></li>

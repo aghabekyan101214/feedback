@@ -50,7 +50,7 @@
                                     </div>
                                     @enderror
                                     <div class="col-md-4">
-                                        <label class="required">Password @if(isset($user)) (Leave Blank If You Want The Password Not To Be Changed) @endif</label>
+                                        <label class="required">Password @if(isset($user)) <span style="color: indianred">(Leave Blank If You Want The Password Not To Be Changed)</span> @endif</label>
                                     </div>
                                     <div class="col-md-8">
                                         <input maxlength="100" value="{{ old("password") }}" class="form-control" name="password" type="text">

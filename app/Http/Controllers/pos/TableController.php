@@ -4,6 +4,7 @@ namespace App\Http\Controllers\pos;
 
 use App\Http\Controllers\Controller;
 use App\pos\Table;
+use App\pos\TableSection;
 use Illuminate\Http\Request;
 
 class TableController extends Controller
@@ -21,11 +22,10 @@ class TableController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $data = Table::paginate(800);
+        $data = Table::with("sections")->paginate(8000);
         $title = self::TITLE;
         $route = self::ROUTE;
         return view(self::FOLDER.".index", compact("data", "title", "route"));
@@ -34,30 +34,31 @@ class TableController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER.".create", compact("title", "route"));
+        $sections = TableSection::all();
+        return view(self::FOLDER.".create", compact("title", "route", "sections"));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|max:255',
+            'section_id' => 'required|integer'
         ]);
 
-        $category = new Table();
-        $category->name = $request->name;
-        $category->save();
+        $table = new Table();
+        $table->name = $request->name;
+        $table->section_id = $request->section_id;
+        $table->save();
 
         return redirect(self::ROUTE);
     }
@@ -65,7 +66,6 @@ class TableController extends Controller
     /**
      * Display the specified resource.
      * @param  \App\pos\Table $table
-     * @return \Illuminate\Http\Response
      */
     public function show(Table $table)
     {
@@ -77,28 +77,29 @@ class TableController extends Controller
     /**
      * Show the form for editing the specified resource.
      * @param  \App\pos\Table  $table
-     * @return \Illuminate\Http\Response
      */
     public function edit(Table $table)
     {
         $title = self::TITLE;
         $route = self::ROUTE;
-        return view(self::FOLDER.".edit", compact("title", "route", "table"));
+        $sections = TableSection::all();
+        return view(self::FOLDER.".edit", compact("title", "route", "table", "sections"));
     }
 
     /**
      * Update the specified resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\pos\Table  $tables
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Table $table)
     {
         $request->validate([
             'name' => 'required|max:255',
+            'section_id' => 'required|integer'
         ]);
 
         $table->name = $request->name;
+        $table->section_id = $request->section_id;
         $table->save();
 
         return redirect(self::ROUTE);
@@ -107,7 +108,6 @@ class TableController extends Controller
     /**
      * Remove the specified resource from storage.
      * @param  \App\pos\Table  $table
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Table $table)
     {

@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
         Route::resource('/tables', 'pos\TableController');
         Route::resource('/items', 'pos\ItemController');
         Route::resource('/orders', 'pos\OrderController');
+        Route::resource('/sections', 'pos\TableSectionController');
         Route::post('/orders/update/{id?}', 'pos\OrderController@update')->middleware('checkOrderStatus');
         Route::get('/edit-order/{id?}', 'pos\OrderController@editOrder')->middleware('checkOrderStatus');
         Route::resource('/current-orders', 'pos\CurrentOrdersController');

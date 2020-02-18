@@ -31,21 +31,16 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Section</th>
                                     <th>Table Name</th>
                                     <th>Settings</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($data as $bin => $d)
+                                @foreach($sections as $bin => $d)
                                     <tr>
                                         <td>{{ $bin + 1 }}</td>
-                                        <td>{{ $d->sections->name }}</td>
                                         <td>{{ $d->name }}</td>
                                         <td>
-                                            <a rel="tooltip" data-toggle="tooltip" title="" href="{{ $route."/".$d->id }}" data-original-title="View">
-                                                <button class="btn btn-icon-toggle"><i class="fa fa-street-view"></i></button>
-                                            </a>
                                             <a rel="tooltip" data-toggle="tooltip" title="" href="{{ $route."/".$d->id }}/edit" data-original-title="Update">
                                                 <button class="btn btn-icon-toggle"><i class="fa fa-edit"></i></button></a>
                                             <form onsubmit="if(confirm('Do You Really Want To Delete The Question?') == false) return false;" style="display: inline-block" action="{{ $route."/".$d->id }}" method="post">
@@ -66,13 +61,4 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).on('change', '.get-change-active', function () {
-            var id = $(this).attr('data-id');
-            var status = $(this).is(':checked') ? 1 : 0;
-            $.post( "/admin/feedback/active-fields/change-status", {id: id, status: status}, function( data ) {
-
-            });
-        });
-    </script>
 @endsection

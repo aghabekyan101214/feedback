@@ -13,6 +13,25 @@
                                 @csrf
 
                                 <div class="row margin-top">
+                                    @error("section_id")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Table Section <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select name="section_id" class="form-control" id="">
+                                            <option value="">Choose The Section</option>
+                                            @foreach($sections as $section)
+                                                <option @if(old("section_id") == $section->id) selected @endif value="{{ $section->id }}">{{ $section->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
                                     @error("name")
                                         <div class="col-md-12">
                                             <div class="alert alert-danger">{{ $message }}</div>

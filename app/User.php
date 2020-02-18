@@ -10,12 +10,15 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const GUEST = 5; // The Guest User Role
+
     const ROLES = [
         1 => "admin",
         2 => "waiter",
         3 => "manager",
         4 => "kitchen"
     ];
+
     /**
      * The attributes that are mass assignable.
      *

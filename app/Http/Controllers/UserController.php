@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\helpers\GenerateString;
 
 class UserController extends Controller
 {
@@ -65,6 +66,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->role = $request->role;
+        $user->token = GenerateString::generate();
         $user->save();
         return redirect(self::ROUTE);
     }
@@ -105,7 +107,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'email' => $user->email == $request->email ? 'required|max:100' : 'required|max:100|unique:users',
-            'password' => 'min:6|max:100',
+            'password' => null != $request->password ? 'max:100|min:6' : "",
             'role' => 'required|integer'
         ]);
 
