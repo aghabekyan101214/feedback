@@ -11,7 +11,10 @@ class ConfigurationController extends Controller
     public function getConfiguration()
     {
         $resp = array(
-
+            "is_manager" => true,
+            "is_waiter" => true,
         );
+
+        return ResponseHelper::success($resp);
     }
 }
