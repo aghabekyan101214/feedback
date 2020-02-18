@@ -13,6 +13,7 @@ class Order extends Model
 
     public function tables()
     {
-        return $this->belongsTo("App\pos\Table", "table_id", "id");
+        return $this->belongsToMany("App\pos\Table", "orders_tables", "order_id", "table_id");
     }
+
 }

@@ -151,7 +151,7 @@
         </div>
     </div>
     <script>
-        let table = "";
+        let table = [];
         let order = [];
         let item;
         let editing = false;
@@ -159,20 +159,26 @@
         $(document).ready(function(){
             $(document).on("click", ".table-cont", function(){
 
-                $("#table .label").each(function(){
-                    if($(this).hasClass("label-success")) {
-                        $(this).removeClass("label-success");
+                $(this).find(".label").toggleClass("label-success");
+                $(".table-show").html($(this).find(".label").html());
+                let push = true;
+                let table_id = $(this).attr('table');
+                table.forEach(function(e, i){
+                    if(e == table_id) {
+                        table.splice(i, 1);
+                        push = false;
                         return;
                     }
                 });
-
-                $(this).find(".label").addClass("label-success");
-                $(".table-show").html($(this).find(".label").html())
-                table = $(this).attr('table');
+                if(push === true) table.push($(this).attr('table'));
+                console.log(table)
             });
+
             @if($order)
-                edit(' <?= json_encode($order); ?> ', '{{ $tableId }}');
+                edit(' <?= json_encode($order); ?> ', '{{ json_encode($tableId) }}');
                 editing = true;
+                let jsoned_tables = '{{ json_encode($tableId) }}';
+                table = JSON.parse(jsoned_tables);
                 orderId = '{{ $orderId }}';
             @endif
         });
@@ -317,7 +323,6 @@
                 return;
             }
             let route = !editing ? "/admin/pos/orders" : `/admin/pos/orders/update/${orderId}`;
-            console.log(route)
             $.post( route, {order: order, tableId: table}, function( data ) {
                 alert(data.message);
                 if(data.success == true) {
@@ -334,9 +339,9 @@
 
         function edit(data, tableId) {
             order = JSON.parse(data);
-            table = tableId;
+            table = JSON.parse(tableId);
             $(".tab-pane .table-cont").each((e, i) => {
-                if($(i).attr("table") == table) {
+                if(table.includes(Number($(i).attr("table")))) {
                     $(i).trigger("click");
                 }
             });

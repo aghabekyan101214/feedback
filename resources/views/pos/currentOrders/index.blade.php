@@ -32,7 +32,11 @@
                         @foreach($data as $bin => $d)
                             <tr>
                                 <td>{{ -($bin - $length) }}</td>
-                                <td>{{ $d->tables->name }}</td>
+                                <td>
+                                    @foreach($d->tables as $t)
+                                        {{ $t->name }}
+                                    @endforeach
+                                </td>
                                 <td>
                                     @if($d->status == 0)
                                         <label class="label label-success">Active</label>

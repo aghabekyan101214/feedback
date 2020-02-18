@@ -36,7 +36,13 @@ class OrderController extends Controller
         $tables = Table::all();
         $orderData = OrdersList::with(["items"])->where("order_id", $orderId)->get();
         $order = array();
-        $tableId = Order::find($orderId)->table_id ??  "";
+        $orderWithTables = Order::with("tables")->find($orderId);
+        $tableId = [];
+        if(null != $orderId) {
+            foreach ($orderWithTables->tables as $table) {
+                $tableId[] = $table->id;
+            }
+        }
         foreach ($orderData as $d) {
             $order[] = array(
                 "id" => $d->item_id,
@@ -68,7 +74,7 @@ class OrderController extends Controller
      */
     public function store(Request $request, $orderId = null)
     {
-        if(null == $request->tableId || !is_numeric($request->tableId)) {
+        if(null == $request->tableId || !is_array($request->tableId)) {
             return response()
                 ->json([
                     "message" => "Wrong Table Selected",
@@ -77,8 +83,8 @@ class OrderController extends Controller
                 ]);
         }
         $order = $orderId == null ? new Order() : Order::find($orderId);
-        $order->table_id = $request->tableId;
         $order->save();
+        $order->tables()->sync($request->tableId);
         if(null != $request->order) {
             foreach ($request->order as $o) {
                 $list = new OrdersList();
