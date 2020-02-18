@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api\pos;
 
+use App\helpers\ValidateNullFields;
 use App\Http\Controllers\Controller;
 use App\pos\Item;
 use App\pos\Order;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use App\Http\Resources\pos\OrderCollection;
+use Illuminate\Support\Facades\URL;
 
 class OrderController extends Controller
 {
@@ -23,5 +25,16 @@ class OrderController extends Controller
             $data[$bin]['sum'] = floatval(OrdersList::selectRaw("SUM(quantity * price) as sum, order_id")->where("order_id", $d->id)->groupBy("order_id")->first()->sum);
         }
         return ResponseHelper::success($data, true);
+    }
+
+    public function getOrderList(Request $request)
+    {
+        $fields = ["order"];
+        ValidateNullFields::validate($request, $fields);
+        $limit = intval($request->limit ?? 200);
+        $ordersList = OrdersList::with(["items" => function($query) {
+            $query->select("name");
+        }])->where("order_id", intval($request->order))->paginate($limit);
+        return ResponseHelper::success($ordersList, true);
     }
 }

@@ -43,7 +43,7 @@
                                         <td>{{ $bin + 1 }}</td>
                                         <td>{{ $d->name }}</td>
                                         <td>{{ $d->email }}</td>
-                                        <td>{{ ucfirst(trans($roles[$d->role])) }}</td>
+                                        <td> @if($d->role != 5) {{ ucfirst(trans($roles[$d->role])) }}@else No Login @endif</td>
                                         <td>
                                             <a rel="tooltip" data-toggle="tooltip" title="" href="{{ $route."/".$d->id }}/edit" data-original-title="Update">
                                                 <button class="btn btn-icon-toggle"><i class="fa fa-edit"></i></button></a>

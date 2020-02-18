@@ -29,7 +29,10 @@ Route::group(['middleware' => 'api-auth'],function(){
 
     Route::group(["prefix" => "pos"], function() {
         Route::get("/get-orders", "api\pos\OrderController@getOrders");
+        Route::get("/get-order-list", "api\pos\OrderController@getOrderList");
         Route::get("/get-tables", "api\pos\TableController@getTables");
+        Route::get("/get-categories", "api\pos\CategoryController@getCategories");
+        Route::get("/get-items", "api\pos\ItemController@getItems");
     });
 
     Route::group(["prefix" => "user"], function() {

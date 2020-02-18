@@ -34,8 +34,7 @@ class UserController extends Controller
 
 //        Success Case Logged In
         if(Hash::check($request->password, $user->password)) {
-            $token = $user->createToken('access')->accessToken;
-            $user->token = $token;
+            $user->token = GenerateString::generate();
             $data = array(
                 "user" => $user
             );
