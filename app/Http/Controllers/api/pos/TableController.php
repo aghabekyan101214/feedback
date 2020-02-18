@@ -15,20 +15,15 @@ class TableController extends Controller
     {
         $sections = TableSection::select("id", "name")->with(["tables" => function($query) {
             $query->select("name", "id", "section_id");
-            $query->with(["orders"]);
+            $query->with(["orders" => function($query) {
+                $query->where("status", Order::STATUS_OPENED);
+            }]);
         }])->get();
+
         foreach($sections as $bin => $section) {
             foreach ($section->tables as $tbin => $table){
-                if(!isset($table->orders[0])) {
-                    $section->tables[$tbin]['is_busy'] = false;
-                }
                 foreach ($table->orders as $obin => $order) {
-
-                    if($order->status == Order::STATUS_OPENED) {
-                        $section->tables[$tbin]['is_busy'] = true;
-                    } else {
-                        $section->tables[$tbin]['is_busy'] = false;
-                    }
+                    $section->tables[$tbin]['group_id'] = $order->id;
                 }
                 unset($table->orders);
             }
