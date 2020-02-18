@@ -33,6 +33,7 @@ Route::group(['middleware' => 'api-auth'],function(){
         Route::get("/get-tables", "api\pos\TableController@getTables");
         Route::get("/get-categories", "api\pos\CategoryController@getCategories");
         Route::get("/get-items", "api\pos\ItemController@getItems");
+        Route::post("/store-order", "api\pos\OrderController@manageStoreOrder");
     });
 
     Route::group(["prefix" => "user"], function() {

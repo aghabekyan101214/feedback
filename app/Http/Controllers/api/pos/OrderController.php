@@ -32,9 +32,36 @@ class OrderController extends Controller
         $fields = ["order"];
         ValidateNullFields::validate($request, $fields);
         $limit = intval($request->limit ?? 200);
-        $ordersList = OrdersList::with(["items" => function($query) {
-            $query->select("name");
+        $ordersList = OrdersList::selectRaw("id, quantity, notes, price, item_id, round( CAST(float8 (quantity * price) as numeric), 2) as total")->with(["items" => function($query) {
+            $query->selectRaw("name, id");
         }])->where("order_id", intval($request->order))->paginate($limit);
         return ResponseHelper::success($ordersList, true);
+    }
+
+    public function manageStoreOrder(Request $request)
+    {
+        $fields = ["item_id", "quantity", "order", "tableId"];
+        ValidateNullFields::validate($request, $fields);
+
+        $order = new Order();
+        $order->save();
+        $order->tables()->sync($request->tableId);
+        $msg = $this->storeOrder($request->order, $order);
+
+        return ResponseHelper::success(array(), false, $msg);
+    }
+
+    private function storeOrder($list, Order $order)
+    {
+        foreach ($list as $o) {
+            $item = Item::find($o["id"]);
+            $list = new OrdersList();
+            $list->item_id = $o['id'];
+            $list->quantity = $o['quantity'];
+            $list->price = $item->price;
+            $list->notes = $o['notes'];
+            $order->ordersList()->save($list);
+        }
+        return "You Have Ordered Successfully";
     }
 }
