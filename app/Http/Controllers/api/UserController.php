@@ -52,7 +52,9 @@ class UserController extends Controller
             $user = $this->saveGuest();
         }
         $data = array(
-            "token" => $user->token
+            "user" => array(
+                "token" => $user->token
+            )
         );
         return ResponseHelper::success($data);
     }
