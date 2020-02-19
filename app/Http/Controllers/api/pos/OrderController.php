@@ -22,8 +22,8 @@ class OrderController extends Controller
             $query->select("name", "section_id");
         }])->whereDate("created_at", Carbon::today())->orWhereDate("created_at", Carbon::yesterday())->orderBy("status")->orderBy("created_at", "DESC")->paginate($limit);
         foreach ($data as $bin => $d) {
-//            $data[$bin]['sum'] = floatval(OrdersList::selectRaw("SUM(quantity * price) as sum, order_id")->where("order_id", $d->id)->groupBy("order_id")->first()->sum);
-            $data[$bin]['sum'] = 5000;
+            $sum = floatval(OrdersList::selectRaw("SUM(quantity * price) as sum, order_id")->where("order_id", $d->id)->groupBy("order_id")->first()->sum ?? 0);
+            $data[$bin]['sum'] = $sum;
         }
         return ResponseHelper::success($data, true);
     }
