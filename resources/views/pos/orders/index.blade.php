@@ -26,6 +26,9 @@
         .current-orders:first-child{
             border-top: 1px dotted gray;
         }
+        .table-tab li {
+            float: right;
+        }
 
     </style>
     <div class="row">
@@ -64,12 +67,32 @@
 
                                     <div id="table" class="tab-pane fade in active">
                                         <div class="row">
-                                            @foreach($tables as $table)
-                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 table-cont" table="{{ $table->id }}">
-                                                    <h1><span class="label label-default">{{ $table->name }}</span></h1>
+                                            <ul class="nav nav-tabs table-tab">
+                                                @foreach($sections as $bin => $section)
+                                                    <li class="@if($bin == 0) active @endif"><a data-toggle="tab" href="#tab-section-{{ $bin }}">{{ $section->name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                            @foreach($sections as $bin => $section)
+                                                <div class="tab-pane fade @if($bin == 0) active in @endif" id="tab-section-{{ $bin }}">
+                                                    <div class="row">
+                                                        @foreach($section->tables as $table)
+                                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 table-cont" table="{{ $table->id }}">
+                                                                <h1><span class="label label-default">{{ $table->name }}</span></h1>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>
+{{--                                        <div class="row">--}}
+{{--                                            @foreach($tables as $table)--}}
+{{--                                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 table-cont" table="{{ $table->id }}">--}}
+{{--                                                    <h1><span class="label label-default">{{ $table->name }}</span></h1>--}}
+{{--                                                </div>--}}
+{{--                                            @endforeach--}}
+{{--                                        </div>--}}
                                     </div>
 
                                     <div id="all" class="tab-pane fade in">
@@ -160,7 +183,6 @@
             $(document).on("click", ".table-cont", function(){
 
                 $(this).find(".label").toggleClass("label-success");
-                $(".table-show").html($(this).find(".label").html());
                 let push = true;
                 let table_id = $(this).attr('table');
                 table.forEach(function(e, i){
@@ -171,7 +193,11 @@
                     }
                 });
                 if(push === true) table.push($(this).attr('table'));
-                console.log(table)
+                let table_names = "";
+                $("#table .label-success").each(function() {
+                    table_names += $(this).html() + "&nbsp";
+                })
+                $(".table-show").html(table_names);
             });
 
             @if($order)

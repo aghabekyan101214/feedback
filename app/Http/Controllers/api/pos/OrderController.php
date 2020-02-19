@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\pos\Item;
 use App\pos\Order;
 use App\pos\OrdersList;
+use App\pos\Table;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use App\Http\Resources\pos\OrderCollection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 class OrderController extends Controller
@@ -18,14 +20,43 @@ class OrderController extends Controller
     public function getOrders(Request $request)
     {
         $limit = $request->limit ?? 200;
-        $data = Order::select("id", "status")->with(["tables" => function($query) {
-            $query->select("name", "section_id");
-        }])->whereDate("created_at", Carbon::today())->orWhereDate("created_at", Carbon::yesterday())->orderBy("status")->orderBy("created_at", "DESC")->paginate($limit);
+        $search_query = strtolower($request->search_query);
+
+        $sql = $this->generateSql($limit, $search_query);
+        $data = $sql->paginate($limit);
+
+        $resp = $this->parseData($data);
+        return ResponseHelper::success($resp, true);
+    }
+
+    private function generateSql($limit, $search_query)
+    {
+        return Order::select("orders.id", "orders.status")
+            ->where(function($query) use($search_query) {
+                $query->where("orders.id", "ILIKE", $search_query);
+                $query->orWhere("tables.name", "ILIKE", "$search_query%");
+            })
+            ->join("orders_tables", "order_id", "=", "orders_tables.order_id")
+            ->join("tables", "tables.id", "=", "orders_tables.table_id")
+            ->where(function($query) {
+                $query->whereDate("orders.created_at", Carbon::today());
+                $query->orWhereDate("orders.created_at", Carbon::yesterday());
+            })
+            ->groupBy("orders.id");
+    }
+
+    private function parseData($data)
+    {
         foreach ($data as $bin => $d) {
             $sum = floatval(OrdersList::selectRaw("SUM(quantity * price) as sum, order_id")->where("order_id", $d->id)->groupBy("order_id")->first()->sum ?? 0);
+            $tables = Table::select("tables.id", "name")
+                ->join("orders_tables", "tables.id", "=", "orders_tables.table_id")
+                ->where("orders_tables.order_id", $d->id)
+                ->get();
             $data[$bin]['sum'] = $sum;
+            $data[$bin]['tables'] = $tables;
         }
-        return ResponseHelper::success($data, true);
+        return $data;
     }
 
     public function getOrderList(Request $request)

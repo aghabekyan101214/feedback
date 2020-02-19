@@ -8,6 +8,7 @@ use App\pos\Order;
 use App\Http\Controllers\Controller;
 use App\pos\OrdersList;
 use App\pos\Table;
+use App\pos\TableSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -34,6 +35,7 @@ class OrderController extends Controller
         $title = self::TITLE;
         $route = self::ROUTE;
         $tables = Table::all();
+        $sections = TableSection::with("tables")->get();
         $orderData = OrdersList::with(["items"])->where("order_id", $orderId)->get();
         $order = array();
         $orderWithTables = Order::with("tables")->find($orderId);
@@ -53,7 +55,7 @@ class OrderController extends Controller
                 "notes" => $d->notes
             );
         }
-        return view(self::FOLDER.".index", compact("categories", "title", "route", "items", "tables", "order", "tableId", "orderId"));
+        return view(self::FOLDER.".index", compact("categories", "title", "route", "items", "tables", "order", "tableId", "orderId", "sections"));
     }
 
     /**

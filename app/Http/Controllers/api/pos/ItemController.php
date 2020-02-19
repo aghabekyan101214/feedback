@@ -16,8 +16,14 @@ class ItemController extends Controller
         $fields = ["category"];
         ValidateNullFields::validate($request, $fields);
         $limit = intval($request->limit ?? 200);
+        $search_query = strtolower($request->search_query);
         $base = URL::to('/');
-        $items = Item::selectRaw("id, name, price, concat('$base/uploads/', icon)")->where("category_id", intval($request->category))->paginate($limit);
+        $items = Item::selectRaw("id, name, price, concat('$base/uploads/', icon)")
+            ->where("category_id", intval($request->category))
+            ->where(function($query) use($search_query) {
+                $query->where("name", "ILIKE", "%$search_query%");
+            })
+            ->paginate($limit);
         return ResponseHelper::success($items, true);
     }
 }
