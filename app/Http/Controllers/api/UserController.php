@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\helpers\ValidateNullFields;
 use Illuminate\Support\Facades\Hash;
 use App\helpers\ResponseHelper;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -57,6 +58,46 @@ class UserController extends Controller
             )
         );
         return ResponseHelper::success($data);
+    }
+
+    public function recoverPassword(Request $request)
+    {
+        $fields = ['email'];
+        ValidateNullFields::validate($request, $fields);
+        $user = User::where("email", $request->email)->first();
+        if(null == $user) {
+            return ResponseHelper::fail("Wrong Email Provided", 422);
+        }
+        $new_password = uniqid();
+        $user->password = bcrypt($new_password);
+        $user->save();
+
+        $text = "Your New Restaurant App Password Is: $new_password";
+        $email_response = $this->sendEmail($text, $request->email);
+        if($email_response['code'] == 200) {
+            return ResponseHelper::success(array(), false, $email_response['msg']);
+        }
+        return ResponseHelper::fail($email_response['code'], $email_response['msg']);
+    }
+
+    private function sendEmail($text, $email)
+    {
+        try{
+            Mail::raw($text, function($message) use($email) {
+                $message->to($email, "aa")
+                    ->subject('bb');
+                $message->from('restaurantapp@info.am','aimtech');
+            });
+            return array(
+                "msg" => "The Message Has Been Sent Successfully",
+                "code" => 200
+            );
+        } catch (\Exception $exception) {
+            return array(
+                "msg" => "Something Wend Wrong, Please, Try Again",
+                "code" => 500
+            );
+        }
     }
 
     private function saveGuest()

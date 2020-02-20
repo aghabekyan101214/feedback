@@ -64,9 +64,20 @@ class OrderController extends Controller
         $fields = ["order"];
         ValidateNullFields::validate($request, $fields);
         $limit = intval($request->limit ?? 200);
-        $ordersList = OrdersList::selectRaw("id, quantity, notes, price, item_id, round( CAST(float8 (quantity * price) as numeric), 2) as total")->with(["items" => function($query) {
-            $query->selectRaw("name, id");
-        }])->where("order_id", intval($request->order))->paginate($limit);
+        $search_query = strtolower($request->search_query);
+//        $ordersList = OrdersList::selectRaw("id, quantity, notes, price, item_id, round( CAST(float8 (quantity * price) as numeric), 2) as total")
+//            ->with(["items" => function($query) {
+//            $query->selectRaw("name, id");
+//        }])->where("order_id", intval($request->order))->paginate($limit);
+        $ordersList = OrdersList::selectRaw("orders_list.id, quantity, notes, items.price, item_id, round( CAST(float8 (orders_list.quantity * items.price) as numeric), 2) as total, items.name as item_name")
+            ->join("items", "items.id", "=", "orders_list.item_id")
+            ->orderBy("orders_list.id")
+            ->where(function($query) use($search_query) {
+                $query->where("items.name", "ILIKE", "%$search_query%");
+                $query->orWhere("items.id", "ILIKE", "$search_query");
+            })
+            ->where("order_id", intval($request->order))
+            ->paginate($limit);
         return ResponseHelper::success($ordersList, true);
     }
 

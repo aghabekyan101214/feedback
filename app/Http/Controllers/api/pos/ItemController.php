@@ -22,6 +22,7 @@ class ItemController extends Controller
             ->where("category_id", intval($request->category))
             ->where(function($query) use($search_query) {
                 $query->where("name", "ILIKE", "%$search_query%");
+                $query->orWhere("id", "ILIKE", $search_query);
             })
             ->paginate($limit);
         return ResponseHelper::success($items, true);
