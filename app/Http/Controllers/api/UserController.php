@@ -86,7 +86,6 @@ class UserController extends Controller
             Mail::raw($text, function($message) use($email) {
                 $message->to($email, "aa")
                     ->subject('bb');
-                $message->from('restaurantapp@info.am','aimtech');
             });
             return array(
                 "msg" => "The Message Has Been Sent Successfully",
@@ -95,7 +94,7 @@ class UserController extends Controller
         } catch (\Exception $exception) {
             \Log::info($exception);
             return array(
-                "msg" => "Something Wend Wrong, Please, Try Again",
+                "msg" => "Something Went Wrong, Please, Try Again",
                 "code" => 500
             );
         }
