@@ -77,7 +77,7 @@ class UserController extends Controller
         if($email_response['code'] == 200) {
             return ResponseHelper::success(array(), false, $email_response['msg']);
         }
-        return ResponseHelper::fail($email_response['code'], $email_response['msg']);
+        return ResponseHelper::fail($email_response['msg'], $email_response['code']);
     }
 
     private function sendEmail($text, $email)
@@ -93,6 +93,7 @@ class UserController extends Controller
                 "code" => 200
             );
         } catch (\Exception $exception) {
+            \Log::info($exception);
             return array(
                 "msg" => "Something Wend Wrong, Please, Try Again",
                 "code" => 500
