@@ -28,7 +28,11 @@ class CurrentOrdersController extends Controller
     {
         $data = Order::with(["ordersList" => function($query) {
             $query->with("items");
-        }])->whereDate("created_at", Carbon::today())->orWhereDate("created_at", Carbon::yesterday())->orderBy("status")->orderBy("created_at", "DESC")->get();
+        }])->whereDate("created_at", Carbon::today())
+            ->orWhereDate("created_at", Carbon::yesterday())
+            ->orderBy("status")
+            ->orderBy("created_at", "DESC")
+            ->get();
         $title = self::TITLE;
         $route = self::ROUTE;
         $length = count($data);

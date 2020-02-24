@@ -31,7 +31,7 @@ class OrderController extends Controller
 
     private function generateSql($limit, $search_query)
     {
-        return Order::select("orders.id", "orders.status")
+        return Order::selectRaw("orders.id, orders.status")
             ->where(function($query) use($search_query) {
                 $query->where("orders.id", "ILIKE", $search_query);
                 $query->orWhere("tables.name", "ILIKE", "$search_query%");
@@ -42,7 +42,9 @@ class OrderController extends Controller
                 $query->whereDate("orders.created_at", Carbon::today());
                 $query->orWhereDate("orders.created_at", Carbon::yesterday());
             })
-            ->groupBy("orders.id");
+            ->orderBy("orders.status")
+            ->orderBy("orders.created_at", "DESC")
+            ->groupBy("orders.id", "orders.status", "orders.created_at");
     }
 
     private function parseData($data)

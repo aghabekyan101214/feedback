@@ -2,7 +2,7 @@
 
 namespace App\Http\connections;
 
-require "vendor/autoload.php";
+require "../../../vendor/autoload.php";
 use React\EventLoop\Factory;
 use React\Socket\Server;
 use React\Socket\ConnectionInterface;
