@@ -21,16 +21,20 @@ class OrderController extends Controller
     {
         $limit = $request->limit ?? 200;
         $search_query = strtolower($request->search_query);
-
-        $sql = $this->generateSql($limit, $search_query);
+        $from = (null != $request->from) ? ($request->from / 1000) : null;
+        $to = (null != $request->to) ? ($request->to / 1000) : null;
+        $sql = $this->generateSql($limit, $search_query, $from, $to);
         $data = $sql->paginate($limit);
 
         $resp = $this->parseData($data);
         return ResponseHelper::success($resp, true);
     }
 
-    private function generateSql($limit, $search_query)
+    private function generateSql($limit, $search_query, $from = null, $to = null)
     {
+        $from = ($from !== null && is_numeric($from)) ? Carbon::createFromTimestamp($from)->toDateTimeString() : Carbon::yesterday();
+        $to = ($to !== null && is_numeric($to)) ? Carbon::createFromTimestamp($to)->toDateTimeString() : Carbon::today();
+
         return Order::selectRaw("orders.id, orders.status")
             ->where(function($query) use($search_query) {
                 $query->where("orders.id", "ILIKE", $search_query);
@@ -38,9 +42,10 @@ class OrderController extends Controller
             })
             ->join("orders_tables", "order_id", "=", "orders_tables.order_id")
             ->join("tables", "tables.id", "=", "orders_tables.table_id")
-            ->where(function($query) {
-                $query->whereDate("orders.created_at", Carbon::today());
-                $query->orWhereDate("orders.created_at", Carbon::yesterday());
+            ->where(function($query) use($from, $to) {
+                $query->whereBetween('orders.created_at', [$from, $to]);
+//                $query->whereDate("orders.created_at", $to);
+//                $query->orWhereDate("orders.created_at", $from);
             })
             ->orderBy("orders.status")
             ->orderBy("orders.created_at", "DESC")
