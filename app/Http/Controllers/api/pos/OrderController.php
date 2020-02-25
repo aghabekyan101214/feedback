@@ -21,8 +21,8 @@ class OrderController extends Controller
     {
         $limit = $request->limit ?? 200;
         $search_query = strtolower($request->search_query);
-        $from = (null != $request->from) ? ($request->from / 1000) : null;
-        $to = (null != $request->to) ? ($request->to / 1000) : null;
+        $from = (null != $request->from && is_numeric($request->from)) ? ($request->from / 1000) : null;
+        $to = (null != $request->to && is_numeric($request->to)) ? ($request->to / 1000) : null;
         $sql = $this->generateSql($limit, $search_query, $from, $to);
         $data = $sql->paginate($limit);
 
