@@ -11,6 +11,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 @csrf
+
                                 <div class="row margin-top">
                                     @error("question_id")
                                     <div class="col-md-12">
@@ -57,6 +58,49 @@
                                         <input size="60" maxlength="255" value="{{ old('answer_fr') }}" class="form-control" name="answer_fr" type="text">
                                     </div>
                                 </div>
+
+                                <div class="row margin-top">
+                                    @error("answer_am")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Variant Armenian <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ old('answer_am') }}" class="form-control" name="answer_am" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    @error("answer_ru")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Variant Russian <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ old('answer_ru') }}" class="form-control" name="answer_ru" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    @error("answer_fr")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Variant French <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ old('answer_fr') }}" class="form-control" name="answer_fr" type="text">
+                                    </div>
+                                </div>
+
 
                                 <div class="row margin-top">
                                     @error("answer_ar")

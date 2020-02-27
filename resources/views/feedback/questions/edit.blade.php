@@ -7,8 +7,10 @@
                     <h1>Create Question</h1>
                 </div>
                 <form action="/admin/feedback/questions/{{ $question->id }}" method="post">
+
                     <div class="panel-body">
                         <div class="row">
+
                             <div class="col-md-12">
                                 @csrf
                                 @method("PUT")
@@ -42,6 +44,38 @@
                                     </div>
                                 </div>
 
+                                <div class="row margin-top">
+                                    @error("question_am")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Question Armenian
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $question->question_am }}" class="form-control" name="question_am" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    @error("question_ru")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Question Russian
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $question->question_ru }}" class="form-control" name="question_ru" type="text">
+                                    </div>
+                                </div>
+
                                 <div class="row margin-top ">
                                     @error("question_ar")
                                     <div class="col-md-12">
@@ -56,17 +90,22 @@
                                     </div>
                                 </div>
 
-                                <div class="row margin-top">
-                                    @error("order")
+                                <div class="row margin-top ">
+                                    @error("group")
                                     <div class="col-md-12">
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     </div>
                                     @enderror
                                     <div class="col-md-4">
-                                        <label class="required">Order <span class="required">*</span></label>
+                                        <label class="required">Group <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input class="form-control" name="order" value="{{ $question->order }}" type="number">
+                                        <select name="group" class="form-control" required>
+                                            <option value="">Choose Question Group</option>
+                                            @foreach($groups as $bin => $group)
+                                                <option @if($question->group == $bin) selected @endif value="{{ $bin }}">{{ ucfirst($group) }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -82,9 +121,9 @@
                                     <div class="col-md-8">
                                         <select name="type" class="form-control" required>
                                             <option value="">Choose Question Type</option>
-                                            <option @if($question->type == 0) selected @endif value="0">General Rating</option>
-                                            <option @if($question->type == 1) selected @endif value="1">Employee Rating</option>
-                                            <option @if($question->type == 2) selected @endif value="2">Custom</option>
+                                            @foreach($types as $bin => $type)
+                                                <option @if($question->type == $bin) selected @endif value="{{ $bin }}">{{ ucfirst(trans($type)) }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>

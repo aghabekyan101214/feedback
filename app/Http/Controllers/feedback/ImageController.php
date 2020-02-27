@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\feedback;
 
-use App\ActiveField;
+use App\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use App\Http\Controllers\Controller;
 
-class ActiveFieldController extends Controller
+class ImageController extends Controller
 {
-
-    private $folder = "feedback.active_fields";
+    private $folder = "feedback.images";
+    private $upload = "feedback";
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +19,8 @@ class ActiveFieldController extends Controller
      */
     public function index()
     {
-        $fields = ActiveField::paginate(100);
-        return view("$this->folder.index", compact("fields"));
+        $images = Image::paginate(50);
+        return view("$this->folder.index", compact("images"));
     }
 
     /**
@@ -27,7 +30,7 @@ class ActiveFieldController extends Controller
      */
     public function create()
     {
-        //
+        return view("$this->folder.create");
     }
 
     /**
@@ -38,16 +41,22 @@ class ActiveFieldController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!is_dir(public_path("uploads/$this->upload"))) {
+            mkdir(public_path("uploads/$this->upload"), 777);
+        }
+        $file = Storage::putFile($this->upload, new File($request->file), 'public');
+        $image = new Image();
+        $image->image = $file;
+        $image->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ActiveField  $activeField
+     * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function show(ActiveField $activeField)
+    public function show(Image $image)
     {
         //
     }
@@ -55,10 +64,10 @@ class ActiveFieldController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ActiveField  $activeField
+     * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(ActiveField $activeField)
+    public function edit(Image $image)
     {
         //
     }
@@ -67,10 +76,10 @@ class ActiveFieldController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ActiveField  $activeField
+     * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ActiveField $activeField)
+    public function update(Request $request, Image $image)
     {
         //
     }
@@ -78,18 +87,12 @@ class ActiveFieldController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ActiveField  $activeField
+     * @param  \App\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ActiveField $activeField)
+    public function destroy(Image $image)
     {
-        //
-    }
-
-    public function change_status(Request $request)
-    {
-        $field = ActiveField::find($request->id);
-        $field->active = $request->status;
-        $field->save();
+        $image->delete();
+        unlink(public_path("uploads/$image->image"));
     }
 }

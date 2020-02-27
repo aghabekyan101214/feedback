@@ -9,7 +9,12 @@ class Question extends Model
     const GENERAL  = 0;
     const EMPLOYEE = 1;
     const CUSTOM   = 2;
-    const TYPES = ["general", "employee", "custom"];
+
+    const RATE = 0;
+    const RADIO = 1;
+
+    const GROUPS = ["General", "Employee", "Custom"];
+    const TYPES = ["Rate", "Radio", "Custom"];
 
     protected $guarded = [];
 

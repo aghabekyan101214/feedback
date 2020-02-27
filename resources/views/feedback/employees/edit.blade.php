@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <h1>Update Employee</h1>
                 </div>
-                <form action="/admin/feedback/employees/{{ $employee->id }}" method="post">
+                <form action="/admin/feedback/employees/{{ $employee->id }}" enctype="multipart/form-data" method="post">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -43,6 +43,38 @@
                                     </div>
                                 </div>
 
+                                <div class="row margin-top">
+                                    @error("name_am")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Name Armenian
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $employee->name_am }}" class="form-control" name="name_am" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    @error("name_ru")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Name Russian
+                                            <span class="required">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $employee->name_ru }}" class="form-control" name="name_ru" type="text">
+                                    </div>
+                                </div>
+
                                 <div class="row margin-top ">
                                     @error("name_ar")
                                     <div class="col-md-12">
@@ -58,6 +90,20 @@
                                 </div>
 
                                 <div class="row margin-top ">
+                                    @error("image")
+                                    <div class="col-md-12">
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    </div>
+                                    @enderror
+                                    <div class="col-md-4">
+                                        <label class="required">Employee Image <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="file" class="form-control" name="image">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
                                     @error("active")
                                     <div class="col-md-12">
                                         <div class="alert alert-danger">{{ $message }}</div>

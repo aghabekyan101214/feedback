@@ -31,20 +31,28 @@
                                     <td>{{ $question->question_fr }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Question Arabic</th>
-                                    <td>{{ $question->question_ar }}</td>
+                                    <th>Question French</th>
+                                    <td>{{ $question->question_am }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Average Rating</th>
-                                    <td>4.80</td>
+                                    <th>Question French</th>
+                                    <td>{{ $question->question_ru }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Question Arabic</th>
+                                    <td>{{ $question->question_ar }}</td>
                                 </tr>
                                 <tr>
                                     <th>Active</th>
                                     <td>{{ $question->active }}</td>
                                 </tr>
                                 <tr>
+                                    <th>Group</th>
+                                    <td>{{ $groups[$question->group] }}</td>
+                                </tr>
+                                <tr>
                                     <th>Type</th>
-                                    <td>{{ $question->type == 0 ? 'General Ratiing' : ($question->type == 1 ? 'Employee Rating' : 'Custom') }}</td>
+                                    <td>{{ ucfirst($types[$question->type]) }}</td>
                                 </tr>
                             </table>
                         </div>

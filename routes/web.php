@@ -25,17 +25,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 //    Feedback Routes
 
     Route::group(["prefix" => "feedback"], function() {
-        Route::resource('/questions', 'QuestionController');
-        Route::resource('/employees', 'EmployeeController');
-        Route::resource('/active-fields', 'ActiveFieldController');
-        Route::resource('/images', 'ImageController');
-        Route::resource('/answers', 'AnswerVariantController');
-        Route::resource('/clients', 'ClientController');
-        Route::post("/employees/change-status", "EmployeeController@change_status");
-        Route::post("/questions/change-status", "QuestionController@change_status");
-        Route::get("/questions/show-answers/{id}", "QuestionController@show_answer");
-        Route::post("/active-fields/change-status", "ActiveFieldController@change_status");
-        Route::post("/answers/change-status", "AnswerVariantController@change_status");
+        Route::resource('/questions', 'feedback\QuestionController');
+        Route::resource('/employees', 'feedback\EmployeeController');
+        Route::resource('/active-fields', 'feedback\ActiveFieldController');
+        Route::resource('/images', 'feedback\ImageController');
+        Route::resource('/answers', 'feedback\AnswerVariantController');
+        Route::resource('/clients', 'feedback\ClientController');
+        Route::post("/employees/change-status", "feedback\EmployeeController@change_status");
+        Route::post("/questions/change-status", "feedback\QuestionController@change_status");
+        Route::get("/questions/show-answers/{id}", "feedback\QuestionController@show_answer");
+        Route::post("/active-fields/change-status", "feedback\ActiveFieldController@change_status");
+        Route::post("/answers/change-status", "feedback\AnswerVariantController@change_status");
     });
 
     //    End Feedback Routes

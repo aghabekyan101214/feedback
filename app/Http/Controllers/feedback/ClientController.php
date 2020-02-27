@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\feedback;
 
-use App\Image;
+use App\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
+use App\Http\Controllers\Controller;
 
-class ImageController extends Controller
+class ClientController extends Controller
 {
-    private $folder = "feedback.images";
-    private $upload = "feedback";
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +15,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $images = Image::paginate(50);
-        return view("$this->folder.index", compact("images"));
+        $data = Client::paginate(100);
+        return view("feedback.clients.index", compact("data"));
     }
 
     /**
@@ -29,7 +26,7 @@ class ImageController extends Controller
      */
     public function create()
     {
-        return view("$this->folder.create");
+        //
     }
 
     /**
@@ -40,22 +37,16 @@ class ImageController extends Controller
      */
     public function store(Request $request)
     {
-        if(!is_dir(public_path("uploads/$this->upload"))) {
-            mkdir(public_path("uploads/$this->upload"), 777);
-        }
-        $file = Storage::putFile($this->upload, new File($request->file), 'public');
-        $image = new Image();
-        $image->image = $file;
-        $image->save();
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Image  $image
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Image $image)
+    public function show(Client $client)
     {
         //
     }
@@ -63,10 +54,10 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Image  $image
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    public function edit(Client $client)
     {
         //
     }
@@ -75,10 +66,10 @@ class ImageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Image $image)
+    public function update(Request $request, Client $client)
     {
         //
     }
@@ -86,12 +77,11 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Image  $image
+     * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Image $image)
+    public function destroy(Client $client)
     {
-        $image->delete();
-        unlink(public_path("uploads/$image->image"));
+        //
     }
 }

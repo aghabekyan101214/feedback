@@ -39,7 +39,7 @@
                                             <td class="button-column">
                                                 <a rel="tooltip" data-toggle="tooltip" title="" href="/admin/feedback/answers/{{ $a->id }}/edit" data-original-title="Update">
                                                     <button class="btn btn-icon-toggle"><i class="fa fa-edit"></i></button></a>
-                                                <form onsubmit="if(confirm('Do You Really Want To Delete The Answer?') == false) return false;" style="display: inline-block" action="/admin/answers/{{ $a->id }}" method="post">
+                                                <form onsubmit="if(confirm('Do You Really Want To Delete The Answer?') == false) return false;" style="display: inline-block" action="/admin/feedback/answers/{{ $a->id }}" method="post">
                                                     @csrf
                                                     @method("DELETE")
                                                     <a rel="tooltip" data-toggle="tooltip" title="" class="delete" href="javascript:void(0)" data-original-title="Delete">

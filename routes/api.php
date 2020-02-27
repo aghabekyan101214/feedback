@@ -41,4 +41,10 @@ Route::group(['middleware' => 'api-auth'],function(){
         Route::get("/get-user", "api\UserController@getUser");
     });
 
+    Route::group(["prefix" => "feedback"], function() {
+        Route::get("/get-general-questions", 'api\feedback\QuestionController@getGeneralQuestions');
+        Route::get("/get-waiter-questions", 'api\feedback\QuestionController@getWaiterQuestions');
+        Route::get("/get-custom-questions", 'api\feedback\QuestionController@getCustomQuestions');
+    });
+
 });

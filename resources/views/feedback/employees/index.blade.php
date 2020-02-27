@@ -25,6 +25,7 @@
                                 <thead>
                                     <tr>
                                         <th>Employee</th>
+                                        <th>Image</th>
                                         <th>Active</th>
                                         <th>Settings</th>
                                     </tr>
@@ -33,7 +34,7 @@
                                     @foreach($employees as $bin => $e)
                                         <tr>
                                             <td>{{ $e->name_en }}</td>
-
+                                            <td><img src="{{ asset("uploads/$e->image") }}" class="img-responsive" style="height: 150px" alt=""></td>
                                             <td>
                                                 <input class="get-change-active hidden" id="get_ch_{{ $bin }}" data-id="{{ $e->id }}" @if($e->active == 1) checked="checked" @endif type="checkbox" value="{{ $e->active }}" name="active">
                                                 <label for="get_ch_{{ $bin }}" class="slider-v2"></label>

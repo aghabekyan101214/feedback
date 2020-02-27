@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\feedback;
 
 use Illuminate\Http\Request;
 use App\AnswerVariant;
 use App\Question;
+use App\Http\Controllers\Controller;
 
 class AnswerVariantController extends Controller
 {
+
+    const URL = "/admin/feedback/answers";
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +29,7 @@ class AnswerVariantController extends Controller
      */
     public function create()
     {
-        $questions = Question::all();
+        $questions = Question::where("type", Question::RADIO)->get();
         return view("feedback.variants.create", compact("questions"));
     }
 
@@ -42,6 +45,8 @@ class AnswerVariantController extends Controller
             'question_id' => 'required|integer',
             'answer_en'   => 'required|max:255',
             'answer_fr'   => 'required|max:255',
+            'answer_am'   => 'required|max:255',
+            'answer_ru'   => 'required|max:255',
             'answer_ar'   => 'required|max:255',
         ]);
 
@@ -49,9 +54,12 @@ class AnswerVariantController extends Controller
         $variant = new AnswerVariant();
         $variant->answer_en = $request->answer_en;
         $variant->answer_fr = $request->answer_fr;
+        $variant->answer_am = $request->answer_am;
+        $variant->answer_ru = $request->answer_ru;
         $variant->answer_ar = $request->answer_ar;
         $question->variants()->save($variant);
-        return redirect("admin/answers");
+
+        return redirect(self::URL);
     }
 
     /**
@@ -86,12 +94,24 @@ class AnswerVariantController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'question_id' => 'required|integer',
+            'answer_en'   => 'required|max:255',
+            'answer_fr'   => 'required|max:255',
+            'answer_am'   => 'required|max:255',
+            'answer_ru'   => 'required|max:255',
+            'answer_ar'   => 'required|max:255',
+        ]);
+
         $variant = AnswerVariant::find($id);
         $variant->answer_en = $request->answer_en;
         $variant->answer_fr = $request->answer_fr;
+        $variant->answer_am = $request->answer_am;
+        $variant->answer_ru = $request->answer_ru;
         $variant->answer_ar = $request->answer_ar;
         $variant->save();
-        return redirect('admin/answers');
+
+        return redirect(self::URL);
     }
 
     /**
@@ -102,7 +122,8 @@ class AnswerVariantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        AnswerVariant::find($id)->delete();
+        return redirect(self::URL);
     }
 
     /**
