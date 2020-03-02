@@ -31,13 +31,13 @@ class QuestionController extends Controller
         $genQuestions = $this->getGeneralQuestions();
         $waiterQuestions = $this->getWaiterQuestions();
         $customQuestions = $this->getCustomQuestions();
-        $employees = $this->getEmployees();
+        $waiters = $this->getWaiters();
 
         $data = array(
             "general_questions" => $genQuestions,
             "waiter_questions" => $waiterQuestions,
             "custom_questions" => $customQuestions,
-            "emmployees" => $employees
+            "waiters" => $waiters
         );
 
         return ResponseHelper::success($data);
@@ -80,11 +80,11 @@ class QuestionController extends Controller
         return $data;
     }
 
-    private function getEmployees()
+    private function getWaiters()
     {
         $url = Url::to('/');
-        $employees = Employee::selectRaw("id, name_$this->lang as name, ('$url/uploads/' || image) as image ")->get();
-        return $employees;
+        $waiters = Employee::selectRaw("id, name_$this->lang as name, ('$url/uploads/' || image) as image ")->get();
+        return $waiters;
     }
 
     public function storeAnswer(Request $request)
