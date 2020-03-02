@@ -6,7 +6,7 @@ namespace App\helpers;
 
 class LanguageHelper
 {
-    const LANGUAGES = ["en", "fr", "am", "ru", "ar"];
+    const LANGUAGES = ["en", "fr", "hy", "ru", "ar"];
 
     public static function checkLang($lang)
     {

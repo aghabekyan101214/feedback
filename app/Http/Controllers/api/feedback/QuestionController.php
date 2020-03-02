@@ -23,7 +23,7 @@ class QuestionController extends Controller
 
     public function __construct(Request $request)
     {
-        $this->lang = LanguageHelper::checkLang($request->lang) ? $request->lang : "en";
+        $this->lang = LanguageHelper::checkLang($request->lang) ? ($request->lang == "hy" ? "am" : $request->lang) : "en";
     }
 
     public function getQuestions()
