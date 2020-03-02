@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\api\feedback;
 
 use App\Client;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Question;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 use App\helpers\LanguageHelper;
@@ -29,11 +31,13 @@ class QuestionController extends Controller
         $genQuestions = $this->getGeneralQuestions();
         $waiterQuestions = $this->getWaiterQuestions();
         $customQuestions = $this->getCustomQuestions();
+        $employees = $this->getEmployees();
 
         $data = array(
             "general_questions" => $genQuestions,
-            "waiter_questions"  => $waiterQuestions,
-            "custom_questions"  => $customQuestions
+            "waiter_questions" => $waiterQuestions,
+            "custom_questions" => $customQuestions,
+            "emmployees" => $employees
         );
 
         return ResponseHelper::success($data);
@@ -43,7 +47,7 @@ class QuestionController extends Controller
     {
         $group = Question::GENERAL;
         $rate = Question::selectRaw("id, question_$this->lang as question")->where(["group" => $group, "type" => Question::RATE, "active" => 1])->get();
-        $radio = Question::selectRaw("id, question_$this->lang as question")->whereHas("variants")->with(["variants" => function($query){
+        $radio = Question::selectRaw("id, question_$this->lang as question")->whereHas("variants")->with(["variants" => function ($query) {
             $query->selectRaw("id, answer_$this->lang as answer, question_id");
         }])->where(["group" => $group, "type" => Question::RADIO, "active" => 1])->get();
 
@@ -74,6 +78,13 @@ class QuestionController extends Controller
         );
 
         return $data;
+    }
+
+    private function getEmployees()
+    {
+        $url = Url::to('/');
+        $employees = Employee::selectRaw("id, name_$this->lang as name, concat('$url/uploads/', image) as image")->get();
+        return $employees;
     }
 
     public function storeAnswer(Request $request)
