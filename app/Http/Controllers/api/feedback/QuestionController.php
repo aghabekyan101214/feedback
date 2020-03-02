@@ -83,7 +83,7 @@ class QuestionController extends Controller
     private function getEmployees()
     {
         $url = Url::to('/');
-        $employees = Employee::selectRaw("id, name_$this->lang as name, concat('$url/uploads/', image) as image")->get();
+        $employees = Employee::selectRaw("id, name_$this->lang as name, ('$url/uploads/' || image) as image ")->get();
         return $employees;
     }
 
