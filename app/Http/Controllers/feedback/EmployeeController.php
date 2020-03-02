@@ -68,7 +68,7 @@ class EmployeeController extends Controller
         $employee->active  = $request->active;
         $employee->save();
 
-        return redirect('/admin/employees');
+        return redirect(self::URL);
     }
 
     /**
@@ -142,7 +142,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-        return redirect("/admin/employees");
+        return redirect(self::URL);
     }
 
     public function change_status(Request $request)
