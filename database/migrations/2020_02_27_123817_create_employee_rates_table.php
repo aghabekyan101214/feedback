@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientsAnswersTable extends Migration
+class CreateEmployeeRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateClientsAnswersTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients_answers', function (Blueprint $table) {
+        Schema::create('employee_rates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger("client_id");
-            $table->foreign("client_id")->references("id")->on("clients")->onDelete("cascade")->onUpdate("cascade");
             $table->unsignedBigInteger("question_id");
             $table->foreign("question_id")->references("id")->on("questions")->onDelete("cascade")->onUpdate("cascade");
-            $table->unsignedBigInteger("employee_id")->nullable();
+            $table->unsignedBigInteger("general_answer_id");
+            $table->foreign("general_answer_id")->references("id")->on("general_answers")->onDelete("cascade")->onUpdate("cascade");
+            $table->unsignedBigInteger("employee_id");
             $table->foreign("employee_id")->references("id")->on("employees")->onDelete("cascade")->onUpdate("cascade");
-            $table->unsignedBigInteger("variant_id")->nullable();
-            $table->foreign("variant_id")->references("id")->on("answer_variants")->onDelete("cascade")->onUpdate("cascade");
-            $table->unsignedSmallInteger("rate")->nullable();
-            $table->text("text")->nullable();
+            $table->unsignedTinyInteger("rate");
             $table->timestamps();
         });
     }
@@ -36,6 +33,6 @@ class CreateClientsAnswersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients_answers');
+        Schema::dropIfExists('employee_rates');
     }
 }

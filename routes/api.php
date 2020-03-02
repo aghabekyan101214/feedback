@@ -42,9 +42,8 @@ Route::group(['middleware' => 'api-auth'],function(){
     });
 
     Route::group(["prefix" => "feedback"], function() {
-        Route::get("/get-general-questions", 'api\feedback\QuestionController@getGeneralQuestions');
-        Route::get("/get-waiter-questions", 'api\feedback\QuestionController@getWaiterQuestions');
-        Route::get("/get-custom-questions", 'api\feedback\QuestionController@getCustomQuestions');
+        Route::get("/get-questions", 'api\feedback\QuestionController@getQuestions');
+        Route::post("/send-answer", 'api\feedback\QuestionController@storeAnswer');
     });
 
 });

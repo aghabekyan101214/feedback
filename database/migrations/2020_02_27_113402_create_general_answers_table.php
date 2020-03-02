@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClientsTable extends Migration
+class CreateGeneralAnswersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateClientsTable extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('general_answers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string("name", 255)->nullable();
-            $table->string("email", 255)->nullable();
-            $table->string("phone", 255)->nullable();
+            $table->unsignedBigInteger("client_id")->nullable();
+            $table->foreign("client_id")->references("id")->on("clients")->onDelete("cascade")->onUpdate("cascade");
             $table->timestamps();
         });
     }
@@ -29,7 +28,6 @@ class CreateClientsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('general_answers');
     }
 }
-
