@@ -18,7 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::with(["clients_answers", "avgRating"])->paginate(50);
+        $questions = Question::paginate(50);
         $types = Question::TYPES;
         $groups = Question::GROUPS;
         return view("$this->folder.index", compact("questions", "types", "groups"));
