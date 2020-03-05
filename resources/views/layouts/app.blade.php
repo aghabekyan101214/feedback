@@ -8,17 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css' />
+{{--    <link href='http://fonts.googleapis.com/css?family=Roboto:300italic,400italic,300,400,500,700,900' rel='stylesheet' type='text/css' />--}}
     <link rel="stylesheet" type="text/css" href="{{ asset("material/css/bootstrap.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("material/css/materialadmin.css") }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset("material/css/font-awesome.min.css") }}" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{{--    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset("material/css/material-design-iconic-font.min.css") }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset("material/css/libs/morris/morris.core.css") }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset("material/css/libs/summernote/summernote.css") }}" />
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset("material/css/libs/morris/morris.core.css") }}" />--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset("material/css/libs/summernote/summernote.css") }}" />--}}
 
-    <link rel="stylesheet" type="text/css" href="{{ asset("material/js/modules/materialadmin/libs/timepicker/bootstrap-timepicker.min.css") }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset("material/js/modules/materialadmin/libs/bootstrap-material-datetimepicker-gh-pages/css/bootstrap-material-datetimepicker.css") }}" />
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset("material/js/modules/materialadmin/libs/timepicker/bootstrap-timepicker.min.css") }}" />--}}
+{{--    <link rel="stylesheet" type="text/css" href="{{ asset("material/js/modules/materialadmin/libs/bootstrap-material-datetimepicker-gh-pages/css/bootstrap-material-datetimepicker.css") }}" />--}}
 
     <link rel="stylesheet" href="{{ asset("material/datatable/datatables.min.css") }}">
     <link rel="stylesheet" href="{{ asset("material/dropzone/dist/dropzone.css") }}">
@@ -40,14 +40,14 @@
             <ul class="header-nav header-nav-options">
                 <li class="header-nav-brand">
                     <div class="brand-holder">
-                        <a href="">
-                            <span class="text-lg text-bold text-primary"> ADMIN</span>
+                        <a href="/admin">
+                            <img src="{{ asset("images/logo.png") }}" alt="Logo">
                         </a>
                     </div>
                 </li>
                 <li>
                     <a class="btn btn-icon-toggle menubar-toggle" data-toggle="menubar" href="javascript:void(0);">
-                        <i class="fa fa-bars"></i>
+                        <i class="fa fa-bars" style="color: white"></i>
                     </a>
                 </li>
             </ul>
@@ -58,11 +58,8 @@
             <ul class="header-nav header-nav-profile">
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle ink-reaction" data-toggle="dropdown">
-                        <i class="fa fa-fw fa-connectdevelop"></i>
-                        <span class="profile-info">
-						Settings
-						<small>Administrator</small>
-					</span>
+                        <i class="fa fa-fw fa-connectdevelop" style="color: white"></i>
+                        <span style="color: white" class="profile-info">Settings</span>
                     </a>
                     <ul class="dropdown-menu animation-dock">
                         <li><a href=""><i class="fa fa-fw fa-lock"></i> Change Password</a></li>
@@ -128,6 +125,7 @@
                     <li @if(in_array("active-fields", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/active-fields"><div class="gui-icon"><i class="fa fa-cogs fa-fw"></i></div><span class="title">Manage Fields</span></a></li>
                     <li @if(in_array("images", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/images"><div class="gui-icon"><i class="fa fa-image fa-fw"></i></div><span class="title">Manage Images</span></a></li>
                     <li @if(in_array("clients", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/clients"><div class="gui-icon"><i class="fa fa-group fa-fw"></i></div><span class="title">Customer</span></a></li>
+{{--                    <li @if(in_array("feedback-answers", explode(".", \Request::route()->getName()))) class="active" @endif><a href="/admin/feedback/feedback-answers"><div class="gui-icon"><i class="fa fa-check fa-fw"></i></div><span class="title">Feedbacks</span></a></li>--}}
 
                 @endif
                 {{--                feedback end--}}
@@ -223,35 +221,35 @@
         src="{{ asset("material/js/modules/materialadmin/libs/jqueryupload/js/jquery.fileupload.js") }}"></script>
 <script type="text/javascript"
         src="{{ asset("material/js/modules/materialadmin/libs/bootstrap/bootstrap.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/spin.js/spin.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/autosize/jquery.autosize.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/moment/moment.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/core/cache/ec2c8835c9f9fbb7b8cd36464b491e73.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/jquery-knob/jquery.knob.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/sparkline/jquery.sparkline.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/nanoscroller/jquery.nanoscroller.min.js") }}"></script>
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/spin.js/spin.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/autosize/jquery.autosize.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/moment/moment.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/core/cache/ec2c8835c9f9fbb7b8cd36464b491e73.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/jquery-knob/jquery.knob.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/sparkline/jquery.sparkline.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/nanoscroller/jquery.nanoscroller.min.js") }}"></script>--}}
 <script type="text/javascript"
         src="{{ asset("material/js/modules/materialadmin/libs/summernote/summernote.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/core/cache/43ef607ee92d94826432d1d6f09372e1.js") }}"></script>
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/core/cache/43ef607ee92d94826432d1d6f09372e1.js") }}"></script>--}}
 <script type="text/javascript"
         src="{{ asset("material/js/modules/materialadmin/core/cache/63d0445130d69b2868a8d28c93309746.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/core/demo/Demo.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/jquerymask/jquery.maskedinput.min.js") }}"></script>
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/core/demo/Demo.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/jquerymask/jquery.maskedinput.min.js") }}"></script>--}}
 
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/timepicker/bootstrap-timepicker.min.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/bootstrap-material-datetimepicker-gh-pages/js/bootstrap-material-datetimepicker.js") }}"></script>
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/timepicker/bootstrap-timepicker.min.js") }}"></script>--}}
+{{--<script type="text/javascript"--}}
+{{--        src="{{ asset("material/js/modules/materialadmin/libs/bootstrap-material-datetimepicker-gh-pages/js/bootstrap-material-datetimepicker.js") }}"></script>--}}
 
 <script src="{{ asset("material/datatable/datatables.min.js") }}"></script>
 <script src="{{ asset("material/dropzone/dist/dropzone.js") }}"></script>

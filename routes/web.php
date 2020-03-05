@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
         Route::post("/employees/change-status", "feedback\EmployeeController@change_status");
         Route::post("/questions/change-status", "feedback\QuestionController@change_status");
         Route::get("/questions/show-answers/{id}", "feedback\QuestionController@show_answer");
+        Route::get("/employee-answers", "feedback\FeedbackAnswerController@employeeAnswers");
         Route::post("/active-fields/change-status", "feedback\ActiveFieldController@change_status");
         Route::post("/answers/change-status", "feedback\AnswerVariantController@change_status");
     });

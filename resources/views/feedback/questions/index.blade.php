@@ -25,6 +25,7 @@
                                 <thead>
                                     <tr>
                                         <th>Question</th>
+                                        <th>Feedback Answer</th>
                                         <th>Active</th>
                                         <th>Group</th>
                                         <th>Type</th>
@@ -35,6 +36,16 @@
                                     @foreach($questions as $bin => $q)
                                         <tr>
                                             <td>{{ $q->question_en }}</td>
+                                            <td>
+                                                @if($q->type == 0)
+                                                    <span style="font-size: 20px" class="label label-success">{{ $q->avgRating }}</span>
+                                                    @if($q->group == 1)
+                                                        <a style="text-decoration: none" href="/admin/feedback/employee-answers">
+                                                            <span style="font-size: 20px" class="label label-default">See Answers</span>
+                                                        </a>
+                                                    @endif
+                                                @endif
+                                            </td>
                                             <td>
                                                 <input class="get-change-active hidden" id="get_ch_{{ $bin }}" data-id="{{ $q->id }}" @if($q->active == 1) checked="checked" @endif type="checkbox" value="{{ $q->active }}" name="active">
                                                 <label for="get_ch_{{ $bin }}" class="slider-v2"></label>

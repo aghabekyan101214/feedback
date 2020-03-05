@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\feedback;
 
 use App\AnswerVariant;
+use App\models\feedback\RatingAnswer;
 use App\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,13 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Question::orderBy("id", "desc")->paginate(50);
+        foreach ($questions as $bin => $question) {
+            if($question->type == 0) {
+                $avg = RatingAnswer::where("question_id", $question->id)->avg("rate");
+                $questions[$bin]->avgRating = floatval($avg);
+            }
+        }
+
         $types = Question::TYPES;
         $groups = Question::GROUPS;
         return view("$this->folder.index", compact("questions", "types", "groups"));
