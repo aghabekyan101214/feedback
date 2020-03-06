@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\feedback;
 
+use App\Configuration;
 use Illuminate\Http\Request;
 use App\AnswerVariant;
 use App\Question;
@@ -59,6 +60,10 @@ class AnswerVariantController extends Controller
         $variant->answer_ar = $request->answer_ar;
         $question->variants()->save($variant);
 
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -111,6 +116,10 @@ class AnswerVariantController extends Controller
         $variant->answer_ar = $request->answer_ar;
         $variant->save();
 
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -123,6 +132,11 @@ class AnswerVariantController extends Controller
     public function destroy($id)
     {
         AnswerVariant::find($id)->delete();
+
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -137,5 +151,10 @@ class AnswerVariantController extends Controller
         $question = Question::find($request->id);
         $question->active = $request->status;
         $question->save();
+
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
     }
 }

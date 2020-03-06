@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Configuration;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\helpers\ResponseHelper;
 
 class ConfigurationController extends Controller
 {
-    public function getConfiguration()
+    public function index()
     {
-        $resp = array(
-            "is_manager" => true,
-            "is_waiter" => true,
-        );
-
-        return ResponseHelper::success($resp);
+        $config = Configuration::select("update_time")->first();
+        return ResponseHelper::success($config);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\feedback;
 
 use App\AnswerVariant;
+use App\Configuration;
 use App\models\feedback\RatingAnswer;
 use App\Question;
 use Illuminate\Http\Request;
@@ -72,6 +73,10 @@ class QuestionController extends Controller
         $question->active      = $request->active;
         $question->save();
 
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -128,6 +133,10 @@ class QuestionController extends Controller
         $question->active      = $request->active;
         $question->save();
 
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -139,6 +148,11 @@ class QuestionController extends Controller
     public function destroy(Question $question)
     {
         $question->delete();
+
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
         return redirect(self::URL);
     }
 
@@ -147,6 +161,11 @@ class QuestionController extends Controller
         $question = Question::find($request->id);
         $question->active = $request->status;
         $question->save();
+
+        $config = Configuration::first();
+        $config->update_time = time();
+        $config->save();
+
     }
 
     public function show_answer($id)
