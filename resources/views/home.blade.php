@@ -23,6 +23,9 @@
             position: relative;
             z-index: 10;
         }
+        .cont{
+            overflow: hidden;
+        }
     </style>
     <div class="row">
         <div class="col-md-12">
@@ -34,7 +37,7 @@
         <div class="col-md-12">
             <div class="row">
 
-                <div class="col-md-2">
+                <div class="col-md-3 cont">
                     <div class="card" onclick="document.getElementById('pos').click()" style="background: url('{{ asset("images/pos.jpg") }}')">
                         <h1 class="text-center title">P.O.S</h1>
                         <div class="layer"></div>
@@ -42,7 +45,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3 cont">
                     <div class="card" onclick="document.getElementById('feedback').click()" style="background: url('{{ asset("images/feedback.jpg") }}')">
                         <h1 class="text-center title">FEEDBACK</h1>
                         <div class="layer"></div>
@@ -50,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3 cont">
                     <div class="card" onclick="document.getElementById('reservation').click()" style="background: url('{{ asset("images/reservation.jpg") }}')">
                         <h1 class="text-center title">RESERVATIONS</h1>
                         <div class="layer"></div>
@@ -58,7 +61,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3 cont">
                     <div class="card" onclick="document.getElementById('inventory').click()" style="background: url('{{ asset("images/inventory.jpg") }}')">
                         <h1 class="text-center title">INVENTORY</h1>
                         <div class="layer"></div>
