@@ -17,6 +17,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return redirect("/admin");
 });
+Route::get("/menu-list", "MenuListController@index");
 
 Auth::routes();
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){

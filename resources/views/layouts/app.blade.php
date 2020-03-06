@@ -219,8 +219,7 @@
         src="{{ asset("material/js/modules/materialadmin/libs/jquery-ui/jquery-ui.min.js") }}"></script>
 <script type="text/javascript"
         src="{{ asset("material/js/modules/materialadmin/libs/jqueryupload/js/jquery.fileupload.js") }}"></script>
-<script type="text/javascript"
-        src="{{ asset("material/js/modules/materialadmin/libs/bootstrap/bootstrap.min.js") }}"></script>
+<script type="text/javascript" src="{{ asset("material/js/modules/materialadmin/libs/bootstrap/bootstrap.min.js") }}"></script>
 {{--<script type="text/javascript"--}}
 {{--        src="{{ asset("material/js/modules/materialadmin/libs/spin.js/spin.min.js") }}"></script>--}}
 {{--<script type="text/javascript"--}}
