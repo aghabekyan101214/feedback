@@ -33,6 +33,24 @@
 
                                 <div class="row margin-top">
                                     <div class="col-md-4">
+                                        <label class="required">Variant Armenian <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $data->answer_am }}" class="form-control" name="answer_am" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    <div class="col-md-4">
+                                        <label class="required">Variant Russian <span class="required">*</span></label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input size="60" maxlength="255" value="{{ $data->answer_ru }}" class="form-control" name="answer_ru" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="row margin-top">
+                                    <div class="col-md-4">
                                         <label class="required">Variant Arabic <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-8">

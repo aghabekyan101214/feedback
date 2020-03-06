@@ -95,7 +95,7 @@ class AnswerVariantController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'question_id' => 'required|integer',
+            'question_id' => 'integer',
             'answer_en'   => 'required|max:255',
             'answer_fr'   => 'required|max:255',
             'answer_am'   => 'required|max:255',
