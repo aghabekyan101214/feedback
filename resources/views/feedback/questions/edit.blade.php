@@ -119,8 +119,7 @@
                                         <label class="required">Type <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="type" class="form-control type    " required>
-                                            <option>Choose Question Type</option>
+                                        <select name="type" class="form-control type" required>
                                             @foreach($types as $bin => $type)
                                                 <option @if($question->type == $bin) selected @endif value="{{ $bin }}">{{ ucfirst(trans($type)) }}</option>
                                             @endforeach
@@ -155,10 +154,6 @@
         </div>
     </div>
     <script>
-        $(document).ready(function(){
-            validateGroups();
-        });
-
         function validateGroups(val = 0) {
             $(".type option").each(function(){
 
