@@ -10,7 +10,11 @@ class ConfigurationController extends Controller
 {
     public function index()
     {
-        $config = Configuration::select("update_time")->first();
-        return ResponseHelper::success($config);
+        $resp = array(
+            "is_manager" => true,
+            "is_waiter" => true,
+        );
+
+        return ResponseHelper::success($resp);
     }
 }
