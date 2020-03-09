@@ -23,6 +23,7 @@ Route::post("/sendAnswer", "api\AnswerController@sendAnswer");
 Route::post("/login", "api\UserController@login");
 Route::post("/login-guest", "api\UserController@loginAsGuest");
 Route::get("/get-configuration", "api\ConfigurationController@index");
+Route::get("/get-feedback-configuration", "api\ConfigurationController@feedbackConfiguration");
 Route::post("/recover-password", "api\UserController@recoverPassword");
 
 Route::group(['middleware' => 'api-auth'],function(){

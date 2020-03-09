@@ -14,9 +14,17 @@ class ConfigurationController extends Controller
         $resp = array(
             "is_manager" => true,
             "is_waiter" => true,
-            "last_update" => $config->update_time ?? 0
         );
 
+        return ResponseHelper::success($resp);
+    }
+
+    public function feedbackConfiguration()
+    {
+        $config = Configuration::select("update_time")->first();
+        $resp = array(
+            "last_update" => $config->update_time ?? 0
+        );
         return ResponseHelper::success($resp);
     }
 }
