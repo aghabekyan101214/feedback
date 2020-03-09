@@ -100,7 +100,7 @@
                                         <label class="required">Group <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="group" class="form-control" required>
+                                        <select name="group" onchange="validateGroups($(this).val())" class="form-control" required>
                                             <option value="">Choose Question Group</option>
                                             @foreach($groups as $bin => $group)
                                                 <option @if($question->group == $bin) selected @endif value="{{ $bin }}">{{ ucfirst($group) }}</option>
@@ -119,8 +119,8 @@
                                         <label class="required">Type <span class="required">*</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <select name="type" class="form-control" required>
-                                            <option value="">Choose Question Type</option>
+                                        <select name="type" class="form-control type    " required>
+                                            <option>Choose Question Type</option>
                                             @foreach($types as $bin => $type)
                                                 <option @if($question->type == $bin) selected @endif value="{{ $bin }}">{{ ucfirst(trans($type)) }}</option>
                                             @endforeach
@@ -154,4 +154,35 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function(){
+            validateGroups();
+        });
+
+        function validateGroups(val = 0) {
+            $(".type option").each(function(){
+
+                if(val == 0) {
+                    if($(this).val() == 2) {
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).attr("disabled", false);
+                    }
+                } else if(val == 1) {
+                    if($(this).val() != 0) {
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).attr("disabled", false);
+                    }
+                } else if(val == 2) {
+                    if($(this).val() != 2) {
+                        $(this).attr("disabled", true);
+                    } else {
+                        $(this).attr("disabled", false);
+                    }
+                }
+            });
+            $('.type option:not([disabled]):first').attr("selected", true);
+        }
+    </script>
 @endsection

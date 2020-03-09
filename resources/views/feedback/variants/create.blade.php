@@ -88,21 +88,6 @@
                                 </div>
 
                                 <div class="row margin-top">
-                                    @error("answer_fr")
-                                    <div class="col-md-12">
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    </div>
-                                    @enderror
-                                    <div class="col-md-4">
-                                        <label class="required">Variant French <span class="required">*</span></label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input size="60" maxlength="255" value="{{ old('answer_fr') }}" class="form-control" name="answer_fr" type="text">
-                                    </div>
-                                </div>
-
-
-                                <div class="row margin-top">
                                     @error("answer_ar")
                                     <div class="col-md-12">
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -128,4 +113,5 @@
             </div>
         </div>
     </div>
+
 @endsection
